@@ -157,7 +157,7 @@ let topMov = [
     }
   ];
 
-  
+  let users = []
 
   // GET requests
 app.get('/', (req, res) => {
@@ -175,7 +175,7 @@ app.get('/', (req, res) => {
 
 app.get('/movies/:title', (req, res) => {
     res.json(topMov.find((movie) =>
-      { return movie.name === req.params.title
+      { return movie.title === req.params.title
     }));
   });
 
@@ -213,6 +213,11 @@ app.post('/users', (req, res) => {
 			res.send('Student with the name was not found.'));
 });
   
+
+app.delete('/users/:username', (req, res) => {
+	let deleteUser = users.find((user) => 
+	res.send('user has been removed'));
+});
 
 // Error-handling
 app.use((err, req, res, next) => {

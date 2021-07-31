@@ -7,11 +7,228 @@
     <title>Documentation</title>
 </head>
 <body>
-    
-    <p>The web
-        application will provide users with access to information about different
-        movies, directors, and genres</p>
-    <p>Users will be able to sign up, update their
-        personal information, and create a list of their favorite movies</p>
+    <div class="table-wrapper">
+        <table>
+            <thead class="table">
+                <tr>
+                    <th>Request</th>
+                    <th>URL</th>
+                    <th>HTTP Method</th>
+                    <th>Request data format</th>
+                    <th>Response data format</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Get list of all movies
+                    </td>
+                    <td>
+                        /movies
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                        -
+                    </td>
+                    <td>
+                        A JSON object holding all data about all movies: <br><br>
+                        {<br>
+                        "_id" : ObjectId("IDNUMBER"),<br>
+                        "title": "Inception",<br>
+                        "descripction": "A thief who steals..."<br>
+                        "director": {<br>
+                        <span class="object-indentation">"name" : "Christopher Nolan",</span><br>
+                        <span class="object-indentation">"bio" : "British-American film director...",</span><br>
+                        <span class="object-indentation">"birth_year" : "1970",</span><br>
+                        <span class="object-indentation">"death_year" : ""</span><br>
+                        },<br>
+                        }
+                    
+                
+                <tr></tr>
+                    <td>
+                        Return data about a single movie by title.
+                    </td>
+                    <td>
+                        /movies/title (title of the movie!!)
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                         The query is case sensitive!
+                    </td>
+                    <td>
+                        A JSON object holding data about a single movie by title.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Return data about all genres.
+                    </td>
+                    <td>
+                        /genres
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                        -
+                    </td>
+                    <td>
+                        A JSON object holding data about all genres:
+                        <br><br>
+                        {<br>
+                        "name": "Sci-Fi",<br>
+                        "description": "Lorem ipsum..."<br>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Return data about a genre by name.
+                    </td>
+                    <td>
+                        /genre/:name
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                        Specify genre name in URL. The query is case sensitive!
+                    </td>
+                    <td>
+                        A JSON object holding data about a genre by name.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Return data about all directors.
+                    </td>
+                    <td>
+                        /directors
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                        -
+                    </td>
+                    <td>
+                        A JSON object holding data about all directors:
+                        <br><br>
+                        {<br>
+                        "name": "Gabriele Muccino",<br>
+                        "bio": "Italian film director."<br>
+                        "birth_year": "1967",<br>
+                        <br>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Return data about a director by name.
+                    </td>
+                    <td>
+                        /directors/:name
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                        Specify the name of director. The query is case sensitive!
+                    </td>
+                    <td>
+                        A JSON object holding data about a director.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Allow new users to register.
+                    </td>
+                    <td>
+                        /users
+                    </td>
+                    <td>
+                        POST
+                    </td>
+                    <td>
+                       
+                        <br><br>
+                        {<br>
+                        "username" : STRING,<br>
+                        "email" : STRING,<br>
+                        >
+                        }
+                    </td>
+                    <td>
+                        A verification message if the registration has been succesfull or not. In case of success you'll
+                        get the new user as a JSON object.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Allow users to deregister by ID.
+                    </td>
+                    <td>
+                        /users/:id
+                    </td>
+                    <td>
+                        DELETE
+                    </td>
+                    <td>
+                        The ID of the user to be deleted should be put after /users/ in the URL."
+                    </td>
+                    <td>
+                        A verification message if the deregistration has been succesfull or not.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Allow users to see their information by name.
+                    </td>
+                    <td>
+                        /users/:user_name
+                    </td>
+                    <td>
+                        GET
+                    </td>
+                    <td>
+                        The name of the user to be shown should be put after /users/ in the URL.
+                    </td>
+                    <td>
+                        A JSON object holding all data about a specific user.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Allow users to update their user data by ID.
+                    </td>
+                    <td>
+                        /users/:id
+                    </td>
+                    <td>
+                        PUT
+                    </td>
+                    <td>
+                        A JSON object holding new user data. Example: <br><br>
+                        {<br>
+                        "name" : STRING,<br>
+                        "email" : STRING,<br>
+                        
+                        " }
+                    </td>
+                    <td>
+                        A verification message that a new username was succesfully assigned or failed.
+                    </td>
+                </tr>
+                
+                
+            </tbody>
+        </table>
+    </div>   
 </body>
 </html>
