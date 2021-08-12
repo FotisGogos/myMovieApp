@@ -188,7 +188,7 @@ app.get('/movies', (req, res) => {
 // Get movie by a title
 
 app.get('/movies/:title', (req, res) => {
-  Movies.findOne({
+  Movies.findOne({ 
       Title: req.params.title
     })
     .then((movie) => {
