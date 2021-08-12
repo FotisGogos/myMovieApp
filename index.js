@@ -130,7 +130,9 @@ app.get('/users/:Username', (req, res) => {
 
 // Add a user 
 app.post('/users', (req, res) => {
-  Users.findOne({ Username: req.body.Username })
+  Users.findOne({ 
+    Username: req.body.Username 
+  })
     .then((user) => {
       if (user) {
         return res.status(400).send(req.body.Username + 'already exists');
@@ -157,7 +159,10 @@ app.post('/users', (req, res) => {
 
 // Update a user's username 
 app.put('/users/:Username', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+  Users.findOneAndUpdate({
+     Username: req.params.Username 
+    }, {
+       $set:
     {
       Username: req.body.Username,
       Password: req.body.Password,
@@ -165,7 +170,9 @@ app.put('/users/:Username', (req, res) => {
       Birthday: req.body.Birthday
     }
   },
-  { new: true }, 
+  {
+     new: true
+     }, 
   // This line makes sure that the updated document is returned
   (err, updatedUser) => {
     if(err) {
@@ -179,10 +186,14 @@ app.put('/users/:Username', (req, res) => {
 
 // Add a movie to a user's list of favorites
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
+  Users.findOneAndUpdate({ 
+    Username: req.params.Username
+   }, {
      $push: { FavoriteMovies: req.params.MovieID }
    },
-   { new: true }, 
+   { 
+     new: true 
+    }, 
    // This line makes sure that the updated document is returned
   (err, updatedUser) => {
     if (err) {
@@ -196,9 +207,16 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 
 // Remove a movie form user's fav list 
 app.delete('/users/:Username/favorites/:_id', (req,res) => {
-  users.findOneAndUpdate ({ Username: req.params.Username},
-    { $pull: { FavoritMovies: req.params._id} },
-    {new: true},
+  Users.findOneAndUpdate ({ 
+    Username: req.params.Username
+  },
+    {
+       $pull: {
+          FavoritMovies: req.params._id} 
+        },
+    {
+      new: true
+    },
     (err, updatedUser) => {
       if (err) {
         console.error(err);
