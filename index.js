@@ -1,11 +1,13 @@
-const express = require('express');
-    morgan = require('morgan');
-    const app = express();
+const express = require('express'),
+    morgan = require('morgan'),
     path = require('path'),
     bodyParser = require('body-parser'),
-    uuid = require('uuid');
+    uuid = require('uuid')
+
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const app = express();
+
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
@@ -43,14 +45,14 @@ app.get('/movies', (req, res) => {
 
 app.get('/movies/:title', (req, res) => {
   Movies.findOne({ 
-      Title: req.params.title
+      title: req.params.title
     })
     .then((movie) => {
       res.json(movie);
     }).catch((err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
-    })
+    });
 });
 
 // Get all Directors 
@@ -65,19 +67,21 @@ app.get('/directors', (req, res) => {
 });
 
 // Gets the data about the name of the director
-app.get('/directors', (req, res) => {
-  Directors.find()
+app.get('/director/:Name', (req, res) => {
+  Directors.findOne({
+      Name: req.params.Name
+    })
     .then((director) => {
-      res.status(200).json(director);
+      res.json(director);
     }).catch((err) => {
       console.error(err);
-      res.status(500).sned('Error: ' + err);
+      res.status(500).send('Error: ' + err);
     });
 });
 
 
 // Get genres 
-app.get('/genres', (req, res) => {
+app.get('/genre', (req, res) => {
   Genres.find()
     .then((genre) => {
       res.status(200).json(genre);
@@ -88,7 +92,7 @@ app.get('/genres', (req, res) => {
 });
 
 // Get genres by name 
-app.get('/genres/:Name', (req, res) => {
+app.get('/genre/:Name', (req, res) => {
   Genres.findOne({
       Name: req.params.Name
     })
@@ -97,21 +101,7 @@ app.get('/genres/:Name', (req, res) => {
     }).catch((err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
-    })
-});
-
-  // Allow new users to register
-app.post('/users', (req, res) => {
-	let newUser = req.body;
-
-	if (!newUser.name) {
-		const message = 'Missing name in request body';
-		res.status(400).send(message);
-	} else {
-		newUser.id = uuid.v4();
-		users.push(newUser);
-		res.status(201).send(newUser);
-	}
+    });
 });
 
  // Get Users
@@ -156,7 +146,7 @@ app.post('/users', (req, res) => {
         .catch((error) => {
           console.error(error);
           res.status(500).send('Error: ' + error);
-        })
+        });
       }
     })
     .catch((error) => {
