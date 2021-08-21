@@ -2,11 +2,13 @@ const express = require('express'),
     morgan = require('morgan'),
     path = require('path'),
     bodyParser = require('body-parser'),
-    uuid = require('uuid')
+    uuid = require('uuid');
+    const { check, validationResult } = require('express-validator');    
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const app = express();
+const cors = require('cors');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -16,13 +18,14 @@ const Directors = Models.Director;
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
    useNewUrlParser: true, useUnifiedTopology: true });
 
+ // Middleware   
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(morgan('common'));
 app.use(express.static('public'));
-
+app.use(cors());
 
 // Importing auth.js file  to my  project
 let auth = require('./auth.js')(app);
@@ -158,12 +161,28 @@ app.get('/users/:Username',passport.authenticate('jwt',{
 });
 
 // Add a user 
-app.post('/users',(req, res) => {
+app.post('/users',
+  [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
+
+(req, res) => {
+  // check the validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+    }
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ 
-    Username: req.body.Username 
+    Username: req.body.Username   // <= Search to see if a user with the requested username already exists
   })
     .then((user) => {
       if (user) {
+        //If the user is found, send a response that it already exists
         return res.status(400).send(req.body.Username + 'already exists');
       } else {
         Users
@@ -286,6 +305,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
   });
 
-  app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+  // Listen for requests
+  const port = process.env.PORT || 8080;
+  app.listen(port, '0.0.0.0',() => {
+   console.log('Listening on Port ' + port);
   });
