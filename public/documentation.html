@@ -209,6 +209,73 @@
                         A verification message that a new username was succesfully assigned or failed.
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        Allow users to add a movie to their favorites
+                    </td>
+                    <td>
+                        /users/:Username/favorites/:MovieID
+                    </td>
+                    <td>
+                        POST
+                    </td>
+                    <td>
+                        A JSON object holding new user data. Example: <br><br>
+                        {<br>
+                            "FavoriteMovies": [],
+                            "_id": "6123f7ff4d5b4c143a70d426",
+                            "Username": "Panagiota",
+                            "Password": "$2b$10$InFDzozeZsEo7EZUzzx0G.G6qJYHz4Qknz34ridyUtsy2gGZkk78W",
+                            "Email": "Fotis88@gmail.com",
+                            "__v": 0
+                         }
+                    </td>
+                    <td>
+                        A JSON object that gives you a user with an updated array of favorites movies.
+                        {<br>
+                            "FavoriteMovies": [6109828300184d9d6bfd11d0], 
+                            "_id": "6123f7ff4d5b4c143a70d426",
+                            "Username": "Panagiota",
+                            "Password": "$2b$10$InFDzozeZsEo7EZUzzx0G.G6qJYHz4Qknz34ridyUtsy2gGZkk78W",
+                            "Email": "Fotis88@gmail.com",
+                            "__v": 0
+                            
+                         }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Allow users to delete their favorite movie by MovieID
+                    </td>
+                    <td>
+                        ('/users/:Username/favorites/:MovieID
+                    </td>
+                    <td>
+                        DELETE
+                    </td>
+                    <td>
+                        A JSON object that gives you a user with an updated array of FavoriteMovies containing the specified MovieID
+                        {<br>
+                            "FavoriteMovies": [6109828300184d9d6bfd11d0], 
+                            "_id": "6123f7ff4d5b4c143a70d426",
+                            "Username": "Panagiota",
+                            "Password": "$2b$10$InFDzozeZsEo7EZUzzx0G.G6qJYHz4Qknz34ridyUtsy2gGZkk78W",
+                            "Email": "Fotis88@gmail.com",
+                            "__v": 0
+                            
+                         }
+                    </td>
+                    <td>
+                        A JSON object that gives you a user with an updated array of FavotiteMovies without the deleted MovieID.
+                        <br>
+                        "FavoriteMovies": [], 
+                        "_id": "6123f7ff4d5b4c143a70d426",
+                        "Username": "Panagiota",
+                        "Password": "$2b$10$InFDzozeZsEo7EZUzzx0G.G6qJYHz4Qknz34ridyUtsy2gGZkk78W",
+                        "Email": "Fotis88@gmail.com",
+                        "__v": 0
+                    </td>
+                </tr>
                 
                 
             </tbody>
