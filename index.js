@@ -47,9 +47,7 @@ app.get('/', (req, res) => {
   
 
   // Get all Movies
-app.get('/movies',passport.authenticate('jwt',
-{ session: false
- }),
+app.get('/movies',passport.authenticate('jwt',{ session: false}),
  (req, res) => {
   Movies.find()
     .then((movies) => {
@@ -212,13 +210,14 @@ app.post('/users',
 app.put('/users/:Username',passport.authenticate('jwt',{
   session:false
 }), (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({
      Username: req.params.Username 
     }, {
        $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
