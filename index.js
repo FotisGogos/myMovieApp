@@ -1,3 +1,4 @@
+//requiring modules
 require('dotenv').config()
 const express = require('express'),
     morgan = require('morgan'),
@@ -43,7 +44,6 @@ require('./passport');
 app.get('/', (req, res) => {
     res.send('Welcome to my Movie Database');
   });
-  
   
 
   // Get all Movies
